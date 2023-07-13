@@ -35,6 +35,23 @@ class App extends Component {
       contacts: [...prevState.contacts, newContact],
     }));
   };
+  
+  componentDidMount() {
+    const savedContacts = localStorage.getItem('contacts');
+    if (savedContacts) {
+      this.setState({ contacts: JSON.parse(savedContacts) });
+    }
+  }
+
+  componentDidUpdate (prevProps, prevState) {
+    console.log ('App componentDidUpdate');
+
+    if (this.state.contacts !== prevState.contacts) {
+    console.log ('Добавлен новый контакт')
+
+    localStorage.setItem('contacts',JSON.stringify(this.state.contacts));
+    }
+  }
 
   handleDeleteContact = id => {
     this.setState(prevState => ({
